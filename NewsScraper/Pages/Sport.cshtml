@@ -1,0 +1,71 @@
+﻿@page
+@model NewsScraper.Pages.SportModel
+
+<div class="container mt-4">
+    <h2 class="mb-4">🏟 Sport</h2>
+    <div class="row g-4">
+        @foreach (var article in Model.SportNews.Take(21))
+        {
+            <div class="col-md-4">
+                <div class="news-card" style="background-image: url('@article.ImageUrl');">
+                    <div class="overlay">
+                        <h5>@article.Title</h5>
+                        <a href="@article.Link" target="_blank" class="btn btn-light btn-sm mt-2">Citește articolul</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .news-card {
+        position: relative;
+        background-repeat: no-repeat;
+        height: 250px;
+        border-radius: 12px;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+        .news-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .news-card .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .news-card:hover .overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        }
+
+        .news-card h5 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+        }
+
+        .news-card .btn {
+            align-self: flex-start;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+</style>
