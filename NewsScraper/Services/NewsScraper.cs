@@ -44,25 +44,20 @@ namespace NewsScraper.Services
             var nodes = doc.DocumentNode.SelectNodes(xpath);
             if (nodes != null)
             {
-                foreach (var node in nodes.Take(21))
+                foreach (var node in nodes.Take(51))
                 {
                     var link = node.GetAttributeValue("href", "#");
                     if (!link.StartsWith("http"))
                         link = new Uri(baseUri, link).ToString();
 
-                    var imgNode = node.SelectSingleNode(".//img")
-                                  ?? node.ParentNode.SelectSingleNode(".//img")
-                                  ?? node.SelectSingleNode("ancestor::article//img")
-                                  ?? node.SelectSingleNode("ancestor::div[contains(@class,'image')]//img");
+                    var imgNode = node.ParentNode.SelectSingleNode("ancestor::article//img");
+                    
+
 
                     string imageUrl = "https://via.placeholder.com/400x250?text=No+Image";
-
                     if (imgNode != null)
                     {
-                        imageUrl = imgNode.GetAttributeValue("src", null)
-                                  ?? imgNode.GetAttributeValue("data-src", null)
-                                  ?? imgNode.GetAttributeValue("data-lazy-src", null)
-                                  ?? imgNode.GetAttributeValue("data-original", null);
+                        imageUrl = imgNode.GetAttributeValue("src", null);
 
                         if (!string.IsNullOrEmpty(imageUrl) && !imageUrl.StartsWith("http"))
                         {
